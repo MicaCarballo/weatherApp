@@ -75,7 +75,7 @@ function App() {
   }, [])
   useEffect(() => {
     if(ip){
-   const URL =`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd&q=${ip}`
+   const URL =`https://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd&q=${ip}`
    axios.get(URL)
    .then(res => {
     setlocationKey(res.data.Key)
@@ -100,11 +100,13 @@ function App() {
   }, [locationKey])
   
   
-  const objBg ={
-    backgroundImage : `url('https://source.unsplash.com/1600x900/?${weather?.weather[0].main})`
-    
-    
-   }
+    const objBg ={
+      backgroundImage : `url('https://source.unsplash.com/1600x900/?${weather?.weather[0].main})`
+      
+      
+     }
+  
+  
    
    
    
@@ -121,7 +123,7 @@ function App() {
 
   return (
     
-    <div className="App" style={objBg}   >
+    <div className="App"   >
      
     
       
@@ -132,7 +134,7 @@ function App() {
         </div>
        
           
-      <WeatherCard weather={weather} temperature={temperature}  toggle={toggle}  />
+      <WeatherCard weather={weather} temperature={temperature}  toggle={toggle} />
       
       <div className='forecast-container'> 
       {
