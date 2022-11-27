@@ -48,6 +48,7 @@ function App() {
           const farenheit = (celcius * 9 / 5 + 32).toFixed(0)
           settemperature({ celcius, farenheit })
           setweather(res.data)
+          
         
         })
         .catch(err => console.log(err))
@@ -100,11 +101,7 @@ function App() {
   }, [locationKey])
   
   
-    const objBg ={
-      backgroundImage : `url('https://source.unsplash.com/1600x900/?${weather?.weather[0].main})`
-      
-      
-     }
+    
   
   
    
@@ -118,17 +115,22 @@ function App() {
     settoggle((s)=> !s)
     
    }
- 
+   const objBg ={
+    backgroundImage : `url('https://source.unsplash.com/1600x900/?${weather?.weather[0].main})`
+    
+    
+   }
   
 
   return (
     
-    <div className="App"   >
+    <div className="App"   style={objBg}>
      
     
       
      { weather ?
         <>
+        <p>tjalksdjlakj</p>
         <div className='container-change-mode-btn'>
         <button className='change-mode-btn' onClick={handleClick}>dark mode</button>
         </div>
