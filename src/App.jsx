@@ -130,7 +130,7 @@ function App() {
       
      { weather ?
         <>
-        <p>tjalksdjlakj</p>
+        
         <div className='container-change-mode-btn'>
         <button className='change-mode-btn' onClick={handleClick}>dark mode</button>
         </div>
