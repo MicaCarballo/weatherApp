@@ -31,19 +31,20 @@ transition: color ease-in-out 1s;
 .card{
     justify-content: center;
    aspect-ratio: 1;
-   width: 47vh;
+   width: 60vh;
     border-radius: 12px;
-    grid-row-start: 2;
-    grid-column-start: 3;
- 
-    grid-row-end: 3;
-    grid-column-end: 4;
+   
    
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0;
-    padding: 2rem;
-    height: 80%;
+    padding: 1rem;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    transform: translateY(-3rem);
     
 }
 h1{
@@ -103,10 +104,16 @@ width: 150px;
     flex-direction: column;
     height: auto;
     align-items: center;
+  }
+    .cards-container{
+        flex-direction: column;
+        padding-top: 5rem;  
+        padding-bottom: 5rem;
+    }
     
    
     
-  }
+  
     
 
     .forecast-container{
@@ -186,15 +193,10 @@ img{
 }
 
 .container-change-mode-btn{
-height: 5%
-;
-grid-row-start: 1;
-grid-column-start: 1;
 
-grid-row-end: 2;
-grid-column-end: 2;
+
 width: 100vw;
-padding-top: 20px;
+
 display: flex;
 align-items: flex-start;
 
@@ -206,34 +208,38 @@ align-items: flex-start;
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0;
     margin: 2rem;
+    align-self: flex-start;
 }
 .cards-container{
-    height: 80%;
+    height: 60%;
     width: 100%;
     display: flex;
-    justify-content:space-evenly;
+   
+
+    justify-content: center;
     align-items: center;
+    gap: 2rem;
 }
 .forecast-container{
-    width: 300px;
-  height: 100%;
+    
+  
     display: flex;
     flex-direction: column;
   
     gap: 0.3rem;
     justify-content: center;
+    transform: translateY(-4rem);
    
 
     
 }
 .weather-container{
-    background-color: brown;
-    height: 100%;
+   
+    height: auto;
     width: 100%;
-    display: grid; 
+    display: flex;
+    flex-direction: column;
 
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     
 }
 
@@ -273,6 +279,7 @@ align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    border-radius: 16px;
     text-align: center;
     justify-content: center;
     align-items: center;

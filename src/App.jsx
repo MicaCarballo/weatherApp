@@ -7,7 +7,7 @@ import Forecast from './components/Forecast'
 import Loading from './components/Loading'
 import WeatherCard from './components/WeatherCard'
 import LocationHome from './components/LocationHome'
-import Map from './components/Map'
+
 
 
 
@@ -23,9 +23,7 @@ function App() {
   const [forecast, setforecast] = useState()
 
   const [loading, setloading] = useState(false)
-  const [StormData, setStormData] = useState()
-const [WildfiresData, setWildfiresData] = useState()
-const [VolcanoData, setVolcanoData] = useState()
+ 
 
 
   const getLocation = () => {
@@ -160,15 +158,17 @@ const [VolcanoData, setVolcanoData] = useState()
           setStormData(data.events)
         }
       })
-      .catch(err => console.log("error"))
+      .catch(() => console.log("error"))
   }
     , [])
 
 
   
 
+    const [isCelcius, setisCelcius] = useState(true)
 
-  const [eventGeografies, seteventGeografies] = useState()
+    const changeMetric = () => setisCelcius(!isCelcius)
+
 
 
 
@@ -188,15 +188,16 @@ const [VolcanoData, setVolcanoData] = useState()
                 <button className='change-mode-btn' onClick={handleClick}>{toggle ? "dark mode" : "light mode"}</button>
               </div>
               <div className='cards-container'>
-              <Map coords={coords}/>
+             
 
-              <WeatherCard weather={weather} temperature={temperature} style={objBg} toggle={toggle} />
+              <WeatherCard weather={weather} temperature={temperature} isCelcius={isCelcius} changeMetric={changeMetric} style={objBg} toggle={toggle} />
 
               <div className='forecast-container'>
                 {
                   forecast?.DailyForecasts.map(dailyforecast => (
 
                     <Forecast dailyforecast={dailyforecast}
+                    isCelcius={isCelcius} changeMetric={changeMetric}
 
                       weather={weather}
                       toggle={toggle}

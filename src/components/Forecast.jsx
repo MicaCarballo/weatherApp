@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Forecast = ({dailyforecast, toggle, }) => {
+const Forecast = ({dailyforecast, toggle,isCelcius }) => {
 
   
 
@@ -36,8 +36,8 @@ function getIconNumber() {
         <img src={`https://developer.accuweather.com/sites/default/files/${getIconNumber()}-s.png`} />
       
         <ul className='forecast-temperatures'>
-          <li className='forecast-temp-max'>{dailyforecast.Temperature.Maximum.Value}°</li>
-          <li className='forecast-temp-min'>{dailyforecast.Temperature.Minimum.Value}°</li>
+          <li className='forecast-temp-max'>{ isCelcius ? `${Math.trunc((dailyforecast.Temperature.Maximum.Value - 32)* 5/9)}°C ` : `${dailyforecast.Temperature.Maximum.Value}°F`}</li>
+          <li className='forecast-temp-min'> {isCelcius ? `${Math.trunc((dailyforecast.Temperature.Minimum.Value - 32)* 5/9)}°C ` : `${dailyforecast.Temperature.Minimum.Value}°F`}</li>
         </ul>
         
     </article>

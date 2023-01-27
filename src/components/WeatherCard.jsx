@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 
 
-const WeatherCard = ({weather, temperature, toggle, }) => {
+const WeatherCard = ({weather, temperature, toggle,isCelcius,changeMetric }) => {
 
-    const [isCelcius, setisCelcius] = useState(true)
-
-    const changeMetric = () => setisCelcius(!isCelcius)
+    
 
    
     

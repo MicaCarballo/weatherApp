@@ -18,7 +18,7 @@ import GoogleMapReact from 'google-map-react';
       lat: latitude,
       lng: longitude
     },
-    zoom: 4
+    zoom: 1
   };
    
   
