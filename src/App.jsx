@@ -116,6 +116,7 @@ function App() {
   };
   const objBg = {
     backgroundImage: `url('https://source.unsplash.com/1600x900/?clouds')`
+    
 
 
   }
@@ -190,7 +191,7 @@ function App() {
               <div className='cards-container'>
              
 
-              <WeatherCard weather={weather} temperature={temperature} isCelcius={isCelcius} changeMetric={changeMetric} style={objBg} toggle={toggle} />
+              <WeatherCard weather={weather} temperature={temperature} isCelcius={isCelcius} changeMetric={changeMetric}  toggle={toggle} />
 
               <div className='forecast-container'>
                 {
