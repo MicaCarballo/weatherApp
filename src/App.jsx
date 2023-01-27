@@ -3,26 +3,34 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 import Forecast from './components/Forecast'
-import InputSearch from './components/InputSearch'
+
 import Loading from './components/Loading'
 import WeatherCard from './components/WeatherCard'
+import LocationHome from './components/LocationHome'
+import Map from './components/Map'
+
 
 
 function App() {
 
-  
+
   const [coords, setcoordinates] = useState()
   const [weather, setweather] = useState()
   const [temperature, settemperature] = useState()
-  
-  const [ip, setip] = useState()
+
+
   const [locationKey, setlocationKey] = useState()
   const [forecast, setforecast] = useState()
 
+  const [loading, setloading] = useState(false)
+  const [StormData, setStormData] = useState()
+const [WildfiresData, setWildfiresData] = useState()
+const [VolcanoData, setVolcanoData] = useState()
 
 
-  useEffect(() => {
+  const getLocation = () => {
     // funcion que se ejecuta cuando llega la info de ubicacion
+
     const success = pos => {
       const obj = {
 
@@ -32,7 +40,7 @@ function App() {
       setcoordinates(obj);
     }
     navigator.geolocation.getCurrentPosition(success)
-  }, [])
+  }
 
 
 
@@ -40,7 +48,7 @@ function App() {
 
   useEffect(() => {
     if (coords) {
-      const APIKEY = `d658790391445ab573acd8a88b3551d5`
+      const APIKEY = `a4d105d3a75a918c4c066c5ed7fa4a15`
       const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${APIKEY}`
       axios.get(URL)
         .then(res => {
@@ -48,117 +56,183 @@ function App() {
           const farenheit = (celcius * 9 / 5 + 32).toFixed(0)
           settemperature({ celcius, farenheit })
           setweather(res.data)
-          
-        
+
+
         })
         .catch(err => console.log(err))
 
     }
-    
+
 
   }, [coords])
 
-  
+
+
   useEffect(() => {
-    
-      
-      const URL = `https://api.ipify.org/?format=json`
+    if (coords) {
+      const URL = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd&q=${coords.lat},${coords.lon}`
       axios.get(URL)
         .then(res => {
-          
-          setip(res.data)
+          setlocationKey(res.data.Key)
         })
         .catch(err => console.log(err))
 
-    
-    
-
-  }, [])
-  useEffect(() => {
-    if(ip){
-   const URL =`https://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd&q=${ip}`
-   axios.get(URL)
-   .then(res => {
-    setlocationKey(res.data.Key)
-   })
-   .catch(err => console.log(err))
-
     }
-    
-  }, [ip])
- 
-  
-  
+
+  }, [coords])
+
+
+
   useEffect(() => {
-    if(locationKey){
-      const URL =`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd`
+    if (locationKey) {
+      const URL = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=%09Rleu0AJhCX9pRSfgALVsOAkSuykYUZDd`
       axios.get(URL)
-      .then(res =>{
-      setforecast(res.data)
-      })
-      .catch(err => console.log(err))
+        .then(res => {
+          setforecast(res.data)
+        })
+        .catch(err => console.log(err))
     }
   }, [locationKey])
-  
-  
-    
-  
-  
-   
-   
-   
-   // change to dark mode
 
-   
-   const [toggle, settoggle] = useState(true)
-   const handleClick = ()=>{
-    settoggle((s)=> !s)
-    
-   }
-   const objBg ={
-    backgroundImage : `url('https://source.unsplash.com/1600x900/?${weather?.weather[0].main})`
-    
-    
-   }
+  useEffect(() => {
+
+    setloading(true)
+    setTimeout(() => {
+      setloading(false)
+    }, 2000);
+
+  }, [])
+
+
+
+
+
+
+  // change to dark mode
+
+
+  const [toggle, settoggle] = useState(true)
+  const handleClick = () => {
+    settoggle((s) => !s)
+
+  };
+  const objBg = {
+    backgroundImage: `url('https://source.unsplash.com/1600x900/?clouds')`
+
+
+  }
+
+  const handleOnSearchChange = (searchData) => {
+    const [lat, lon] = searchData.value.split(" ");
+    const obj = {
+      lat: lat,
+      lon: lon
+    }
+    setcoordinates(obj)
+  }
+
+  useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
+    const URL = "https://eonet.gsfc.nasa.gov/api/v2.1/events"
+    axios.get(URL)
+      .then((res) => {
+        if (res.data) {
+          const data = (res.data);
+         
+         /* data?.events.map((event) => {
+            /*if (event?.categories[0].id === 10) {
+              
+              setStormData(event)
+
+              
+
+
+            } if(event.categories[0].title === "Volcanoes"){
+              console.log(data.event)
+            }
+
+            setStormData(event)
+          }
+          )*/
+          setStormData(data.events)
+        }
+      })
+      .catch(err => console.log("error"))
+  }
+    , [])
+
+
   
+
+
+  const [eventGeografies, seteventGeografies] = useState()
+
+
+
 
   return (
-    
-    <div className="App"   style={objBg}>
-     
-    
-      
-     { weather ?
-        <>
-        
-        <div className='container-change-mode-btn'>
-        <button className='change-mode-btn' onClick={handleClick}>dark mode</button>
-        </div>
-       
-          
-      <WeatherCard weather={weather} temperature={temperature}  toggle={toggle} />
-      
-      <div className='forecast-container'> 
+
+    <div className="App" style={objBg} >
       {
-        forecast?.DailyForecasts.map(dailyforecast =>(
-          
-          <Forecast dailyforecast={dailyforecast}
-          
-          weather={weather}
-          toggle ={toggle}
-          key={dailyforecast.Date}
-          
-          />
-         
-        ))
-}
-        </div>
-        
-    </>
-     :
-     <Loading />
-    }
-      </div>
+        loading ?
+          <Loading />
+          :
+
+          weather ?
+            <>
+                <div className='weather-container'>
+              <div className='container-change-mode-btn'>
+                <button className='change-mode-btn' onClick={handleClick}>{toggle ? "dark mode" : "light mode"}</button>
+              </div>
+              <div className='cards-container'>
+              <Map coords={coords}/>
+
+              <WeatherCard weather={weather} temperature={temperature} style={objBg} toggle={toggle} />
+
+              <div className='forecast-container'>
+                {
+                  forecast?.DailyForecasts.map(dailyforecast => (
+
+                    <Forecast dailyforecast={dailyforecast}
+
+                      weather={weather}
+                      toggle={toggle}
+                      key={dailyforecast.Date}
+
+
+                    />
+
+                  ))
+
+                }
+                
+              </div>
+
+
+               </div>
+                </div>
+            </>
+            :
+            <LocationHome coords
+              ={coords}
+              getLocation={getLocation}
+              onSearchChange={handleOnSearchChange}
+
+            />
+
+      }
+
+
+
+
+
+
+
+
+    </div>
   )
 }
 

@@ -18,10 +18,10 @@ const WeatherCard = ({weather, temperature, toggle, }) => {
     
    <article className={`card ${toggle ?'light' : 'dark' }`} >
     
-    <h1>Current weather in</h1>
+    <h1>Current weather</h1>
     
     <h2>{`${weather?.name}, ${weather?.sys.country}`}</h2>
-    <div className='container'>
+    <div className='container' >
     <section>
         <img src={weather && `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="" />
        <h3>Temperature: { isCelcius ? `${temperature?.celcius} °C` : `${temperature?.farenheit} °F`  } </h3>
@@ -45,4 +45,4 @@ const WeatherCard = ({weather, temperature, toggle, }) => {
     
 }
 
-export default WeatherCard
+export default WeatherCard 
